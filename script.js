@@ -1,10 +1,11 @@
 let cs_col = "orange";
 let reg_col = "black";
-let total = 1893;
-let highlighted_num = 330;
+let total = 1829;
+let highlighted_num = 263;
 let count = 0;
 let block_space = 55;
 let row_gap = 5;
+let row_not_col = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -14,16 +15,15 @@ function setup() {
 function draw() {
   count = 0;
   noStroke();
-  let num_remainder = total % 100;
-  let num_rows = Math.floor(total / 1000);
+
+  let num_rows = Math.floor(total / 1000) + 1;
 
   for (let x = 0; x < num_rows; x++) {
-    column(5, 5 + block_space * x, 10);
+    stack(5, 5 + block_space * x, 10);
   }
-  remainder(5, 5 + block_space * num_rows, num_remainder);
 }
 
-function column(startx, starty, num) {
+function stack(startx, starty, num, count) {
   for (let x = 0; x < num; x++) {
     hundred_block(startx + x * block_space, starty);
   }
@@ -48,6 +48,7 @@ function hundred_block(startx, starty) {
       } else {
         fill(reg_col);
       }
+      if (count >= total) return;
       count += 1;
       ellipse(startx + x * row_gap, starty + y * row_gap, 2, 2);
     }
