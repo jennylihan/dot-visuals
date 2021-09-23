@@ -1,11 +1,13 @@
 let cs_col = "orange";
 let reg_col = "black";
-let total = 1829;
-let highlighted_num = 263;
-let count = 0;
+// let total = [16914];
+// let highlighted_num = [2];
+// let count = [0];
+let total = [1790, 1717, 1718, 1740, 1829, 1738, 1746, 1893];
+let highlighted_num = [144, 130, 211, 217, 263, 274, 320, 330];
+let count = [0, 0, 0, 0, 0, 0, 0, 0];
 let block_space = 55;
 let row_gap = 5;
-let row_not_col = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -13,43 +15,37 @@ function setup() {
 }
 
 function draw() {
-  count = 0;
+  count = [0, 0, 0, 0, 0, 0, 0, 0];
   noStroke();
+  for (let i = 0; i < total.length; i++) {
+    drawyear(i);
+  }
+}
 
-  let num_rows = Math.floor(total / 1000) + 1;
+function drawyear(index) {
+  let num_rows = Math.floor(total[index] / 1000) + 1;
 
   for (let x = 0; x < num_rows; x++) {
-    stack(5, 5 + block_space * x, 10);
+    stack(5, 5 + block_space * x + index * 130, 10, index);
   }
 }
 
-function stack(startx, starty, num, count) {
+function stack(startx, starty, num, index) {
   for (let x = 0; x < num; x++) {
-    hundred_block(startx + x * block_space, starty);
+    hundred_block(startx + x * block_space, starty, index);
   }
 }
 
-function remainder(startx, starty, num) {
-  let curr_count = 0;
+function hundred_block(startx, starty, index) {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
-      ellipse(startx + x * 5, starty + y * 5, 2, 2);
-      curr_count++;
-      if (curr_count >= num) return;
-    }
-  }
-}
-
-function hundred_block(startx, starty) {
-  for (let x = 0; x < 10; x++) {
-    for (let y = 0; y < 10; y++) {
-      if (count < highlighted_num) {
+      if (count[index] < highlighted_num[index]) {
         fill(cs_col);
       } else {
         fill(reg_col);
       }
-      if (count >= total) return;
-      count += 1;
+      if (count[index] >= total[index]) return;
+      count[index] += 1;
       ellipse(startx + x * row_gap, starty + y * row_gap, 2, 2);
     }
   }
